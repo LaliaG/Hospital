@@ -1,6 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
+    padding-top: 56px; /* Ajuste si nécessaire pour éviter la superposition avec la navbar fixe */
 }
 
 .navbar-brand {
@@ -22,4 +23,11 @@ body {
 
 .footer .text-muted {
     color: #6c757d !important;
+    background-color: #21081a;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
