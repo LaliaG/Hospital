@@ -34,17 +34,20 @@ public class Consultation {
     private List<String> treatmentSheets;
 
 
-    @NotNull
-    @NotBlank
-    @Size(min = 1, message = "There must be at least one prescription")
-    private List<String> prescriptions;
-
     private Patient patient;
 
 
     @NotNull
     @NotBlank
     private String patientId;
+
+
+    /*@NotNull
+    @NotBlank
+    @Size(min = 1, message = "There must be at least one prescription")
+    private List<String> prescriptions;*/
+
+
 
 
 }

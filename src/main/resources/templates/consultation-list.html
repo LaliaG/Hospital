@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Consultation </title>
+</head>
+<body>
+
+<li th:each="patient : ${consultations}">
+    <span th:text="${patient.getName()}"></span> - <span th:text="${patient.getPatient().getName()}"></span>
+    <span th:each="treatmentSheet : ${patient.getTreatmentSheets()}" th:text="${treatmentSheet}"></span>
+    <a th:href="@{/consultation/delete(id=${patient.getId()})}">Delete</a>
+    <a th:href="@{/consultation/update(id=${patient.getId()})}">Update</a>
+</li>
+
+</body>
+</html>

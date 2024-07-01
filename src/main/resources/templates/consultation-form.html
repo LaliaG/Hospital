@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultation Form</title>
+</head>
+<body>
+
+<h1>Add consultation</h1>
+<form th:action="@{/consultation/add}" th:object="${consultation}" method="post">
+    <input th:field="*{id}" type="hidden">
+    <div>
+        <label for="ConsultationDateConsultation">Date of consultation :</label>
+        <input th:field="*{dateConsultation}" type="date" id="ConsultationDateConsultation">
+        <span th:if="${#fields.hasErrors('dateConsultation')}" th:errors="*{dateConsultation}"></span>
+    </div>
+    <div>
+        <label for="recipeIngredients">Liste des ingrédients :</label>
+        <input th:field="*{ingredients}" type="text" id="recipeIngredients">
+        <span th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}"></span>
+        <small>Séparez les ingrédients par des virgules</small>
+    </div>
+    <div>
+        <label for="recipeInstructions">Instructions :</label>
+        <input th:field="*{instructions}" type="text" id="recipeInstructions">
+        <span th:if="${#fields.hasErrors('instructions')}" th:errors="*{instructions}"></span>
+    </div>
+    <div>
+        <label for="recipeCategory">Catégories :</label>
+        <select th:field="*{categorieId}" id="recipeCategory" >
+            <option th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
+        </select>
+    </div>
+    <button type="submit">Valider</button>
+</form>
+
+</body>
+</html>
