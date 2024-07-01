@@ -1,38 +1,40 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Consultation Form</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-
-<h1>Add consultation</h1>
-<form th:action="@{/consultation/add}" th:object="${consultation}" method="post">
-    <input th:field="*{id}" type="hidden">
-    <div>
-        <label for="ConsultationDateConsultation">Date of consultation :</label>
-        <input th:field="*{dateConsultation}" type="date" id="ConsultationDateConsultation">
-        <span th:if="${#fields.hasErrors('dateConsultation')}" th:errors="*{dateConsultation}"></span>
-    </div>
-    <div>
-        <label for="recipeIngredients">Liste des ingrédients :</label>
-        <input th:field="*{ingredients}" type="text" id="recipeIngredients">
-        <span th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}"></span>
-        <small>Séparez les ingrédients par des virgules</small>
-    </div>
-    <div>
-        <label for="recipeInstructions">Instructions :</label>
-        <input th:field="*{instructions}" type="text" id="recipeInstructions">
-        <span th:if="${#fields.hasErrors('instructions')}" th:errors="*{instructions}"></span>
-    </div>
-    <div>
-        <label for="recipeCategory">Catégories :</label>
-        <select th:field="*{categorieId}" id="recipeCategory" >
-            <option th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
-        </select>
-    </div>
-    <button type="submit">Valider</button>
-</form>
-
+<header th:replace="fragments/navbar :: navbar"></header>
+<div class="container">
+    <h1>Create Consultation</h1>
+    <form th:action="@{/consultation/add}" th:object="${consultation}" method="post">
+        <div class="form-group">
+            <label for="dateConsultation">Date:</label>
+            <input type="date" class="form-control" id="dateConsultation" th:field="*{dateConsultation}" required>
+            <div th:if="${#fields.hasErrors('dateConsultation')}" th:errors="*{dateConsultation}" class="text-danger"></div>
+        </div>
+        <div class="form-group">
+            <label for="nameDoctor">Doctor:</label>
+            <input type="text" class="form-control" id="nameDoctor" th:field="*{nameDoctor}" required>
+            <div th:if="${#fields.hasErrors('nameDoctor')}" th:errors="*{nameDoctor}" class="text-danger"></div>
+        </div>
+        <div class="form-group">
+            <label for="patientId">Patient:</label>
+            <select class="form-control" id="patientId" th:field="*{patient.id}" required>
+                <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.lastname} + ', ' + ${patient.firstname}">SY, Astou</option>
+            </select>
+            <div th:if="${#fields.hasErrors('patient.id')}" th:errors="*{patient.id}" class="text-danger"></div>
+        </div>
+        <div class="form-group">
+            <label for="treatmentSheets">Treatment Sheets:</label>
+            <input type="text" class="form-control" id="treatmentSheets" th:field="*{treatmentSheets}" placeholder="Comma-separated list of treatment sheets">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="/patient/detail" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+<footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

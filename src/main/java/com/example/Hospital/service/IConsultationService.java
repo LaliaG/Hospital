@@ -11,6 +11,6 @@ public interface IConsultationService {
     List<Consultation> searchConsultations(String search, Patient patient);
 
     void delete(Long id);
-    Consultation getById(Long id);
+    Consultation getConsultationById(Long id);
     Consultation update(Long id, Consultation consultation, Patient patient);
 }

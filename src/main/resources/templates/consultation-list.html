@@ -2,16 +2,45 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>List of Consultation </title>
+    <title>Consultation List</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-
-<li th:each="patient : ${consultations}">
-    <span th:text="${patient.getName()}"></span> - <span th:text="${patient.getPatient().getName()}"></span>
-    <span th:each="treatmentSheet : ${patient.getTreatmentSheets()}" th:text="${treatmentSheet}"></span>
-    <a th:href="@{/consultation/delete(id=${patient.getId()})}">Delete</a>
-    <a th:href="@{/consultation/update(id=${patient.getId()})}">Update</a>
-</li>
-
+<header th:replace="header :: navbar"></header>
+<div class="container">
+    <h1>Consultation List</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Patient ID</th>
+            <th>Date</th>
+            <th>Doctor</th>
+            <th>Treatment Sheets</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="consultation : ${consultations}">
+            <td th:text="${consultation.id}"></td>
+            <td th:text="${consultation.patientId}"></td>
+            <td th:text="${consultation.dateConsultation}"></td>
+            <td th:text="${consultation.nameDoctor}"></td>
+            <td>
+                <ul>
+                    <li th:each="sheet : ${consultation.treatmentSheets}" th:text="${sheet}"></li>
+                </ul>
+            </td>
+            <td>
+                <a th:href="@{/consultation/delete/{id}(id=${consultation.id})}" class="btn btn-danger">Delete</a>
+                <a th:href="@{/consultation/update/{id}(id=${consultation.id})}" class="btn btn-primary">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/consultation/form" class="btn btn-success">Create New Consultation</a>
+</div>
+<footer th:replace="footer :: footer"></footer>
 </body>
 </html>

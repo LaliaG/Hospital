@@ -1,36 +1,49 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>List of patients</title>
-    <span th:replace="~{home :: bootstrapImport}"></span>
+    <title>Patient List</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-
-<span th:replace="~{home :: navbar}"></span>
-<main class="container">
-    <h1>List of patients</h1>
-    <table class="table" th:unless="${patients.isEmpty()}">
+<header th:replace="fragments/navbar :: navbar"></header>
+<div class="container">
+    <h1>Patient List</h1>
+    <form th:action="@{/patient/list}" method="get" class="form-inline mb-3">
+        <div class="form-group">
+            <label for="searchName" class="mr-2">Search by Name:</label>
+            <input type="text" class="form-control mr-2" id="searchName" name="searchName" th:value="${searchName}">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Lastname</th>
-            <th scope="col">Firstname</th>
-            <th scope="col">BirthDate</th>
-            <th scope="col">Details</th>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of Birth</th>
+            <th>Email</th>
+            <th>Actions</th>
         </tr>
         </thead>
-        <tbody th:each="patient : ${patients}">
-        <td th:text="${s.id}"></td>
-        <td th:text="${s.lastname}"></td>
-        <td th:text="${s.firstname}"></td>
-        <td th:text="${s.birthDate}"></td>
-        <td><a th:href="@{/patient/{id}(id=${s.id})}" class="btn btn-outline-info">Details</a></td>
+        <tbody>
+        <tr th:each="patient : ${patients}">
+            <td th:text="${patient.id}"></td>
+            <td th:text="${patient.firstname}"></td>
+            <td th:text="${patient.lastname}"></td>
+            <td th:text="${patient.birthDate}"></td>
+            <td th:text="${patient.email}"></td>
+            <td>
+                <a th:href="@{/patient/detail/{id}(id=${patient.id})}" class="btn btn-info">Details</a>
+                <a th:href="@{/patient/update?id=${patient.id}}" class="btn btn-warning">Update</a>
+                <a th:href="@{/patient/delete?id=${patient.id}}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
         </tbody>
     </table>
-    <p th:if="${patients.isEmpty()}">There are no patients !</p>
-</main>
-<span th:replace="~{home :: footer}"></span>
-
+    <a href="/patient/form" class="btn btn-success">Create New Patient</a>
+</div>
+<footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

@@ -1,10 +1,64 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Patient Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-
+<header th:replace="fragments/navbar :: navbar"></header>
+<div class="container">
+    <h1>Patient Details</h1>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <td th:text="${patient.id}"></td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td th:text="${patient.firstname}"></td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td th:text="${patient.lastname}"></td>
+        </tr>
+        <tr>
+            <th>Date of Birth</th>
+            <td th:text="${patient.dateNaissance}"></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td th:text="${patient.email}"></td>
+        </tr>
+    </table>
+    <h2>Medical Record</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Doctor</th>
+            <th>Treatment Sheets</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="consultation : ${patient.consultations}">
+            <td th:text="${consultation.dateConsultation}"></td>
+            <td th:text="${consultation.nameDoctor}"></td>
+            <td>
+                <ul>
+                    <li th:each="sheet : ${consultation.treatmentSheets}" th:text="${sheet}"></li>
+                </ul>
+            </td>
+            <td>
+                <a th:href="@{/consultation/detail/{id}(id=${consultation.id})}" class="btn btn-info">Details</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/consultation/form}" class="btn btn-success">Create New Consultation</a>
+    <a th:href="@{/patient/list}" class="btn btn-secondary">Back to List</a>
+</div>
+<footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

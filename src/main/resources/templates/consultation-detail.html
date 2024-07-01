@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Consultation Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-
+<header th:replace="fragments/navbar :: navbar"></header>
+<div class="container">
+    <h1>Consultation Details</h1>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <td th:text="${consultation.id}"></td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td th:text="${consultation.dateConsultation}"></td>
+        </tr>
+        <tr>
+            <th>Doctor</th>
+            <td th:text="${consultation.nameDoctor}"></td>
+        </tr>
+        <tr>
+            <th>Patient</th>
+            <td th:text="${consultation.patient.firstname} + ' ' + ${consultation.patient.lastname}"></td>
+        </tr>
+        <tr>
+            <th>Treatment Sheets</th>
+            <td>
+                <ul>
+                    <li th:each="sheet : ${consultation.treatmentSheets}" th:text="${sheet}"></li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    <a th:href="@{/patient/detail/{id}(id=${consultation.patient.id})}" class="btn btn-secondary">Back to Patient</a>
+</div>
+<footer th:replace="fragments/footer :: footer"></footer>
 </body>
 </html>

@@ -33,7 +33,7 @@ public class ConsultationController {
     public String form(Model model){
         model.addAttribute("patients", patientService.getAllPatients());
         model.addAttribute("consultation", new Consultation());
-        return "recipe-form";
+        return "consultation-form";
     }
 
     @PostMapping("/add")
@@ -73,7 +73,15 @@ public String addConsultation(@Valid @ModelAttribute("consultation") Consultatio
         }
     }
     return "redirect:/consultation/list";
-}
+} ou
+ @PostMapping("/add")
+    public String addConsultation(@Valid @ModelAttribute Consultation consultation, BindingResult result) {
+        if (result.hasErrors()) {
+            return "consultation-form";
+        }
+        consultationService.saveConsultation(consultation);
+        return "redirect:/patient/detail/" + consultation.getPatient().getId();
+    }
 
     */
 
@@ -88,6 +96,13 @@ public String addConsultation(@Valid @ModelAttribute("consultation") Consultatio
         Consultation consultation = consultationService.getById(id);
         model.addAttribute("consultation", consultation);
         model.addAttribute("patients", patientService.getAllPatients());
-        return "recipe-form";
+        return "consultation-form";
+    }
+
+    @GetMapping("/detail/{id}")
+    public String showConsultationDetail(@PathVariable("id") Long id, Model model) {
+        Consultation consultation = consultationService.getConsultationById(id);
+        model.addAttribute("consultation", consultation);
+        return "consultation-detail";
     }
 }
